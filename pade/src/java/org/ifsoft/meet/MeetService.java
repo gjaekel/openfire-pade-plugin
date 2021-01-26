@@ -40,8 +40,6 @@ import org.slf4j.LoggerFactory;
 import org.jivesoftware.openfire.plugin.rest.BasicAuth;
 import org.xmpp.packet.JID;
 import net.sf.json.*;
-import org.igniterealtime.openfire.plugins.pushnotification.PushInterceptor;
-
 
 @Path("restapi/v1/meet")
 public class MeetService {
@@ -130,30 +128,6 @@ public class MeetService {
 
         } catch (Exception e) {
             Log.error("postWebPush", e);
-        }
-        return Response.status(Response.Status.BAD_REQUEST).build();
-    }
-
-    //-------------------------------------------------------
-    //
-    //  Message
-    //
-    //-------------------------------------------------------
-
-    @POST
-    @Path("/message")
-    public Response postMessage(String notification) throws ServiceException {
-        String username = getEndUser();
-        Log.debug("message " + username + "\n" + notification);
-
-        try {
-            if (meetController.postMessage(username, notification))
-            {
-                return Response.status(Response.Status.OK).build();
-            }
-
-        } catch (Exception e) {
-            Log.error("postMessage", e);
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
@@ -372,17 +346,12 @@ public class MeetService {
 
         if (token != null)
         {
-            if (PushInterceptor.tokens.containsKey(token))
+            String[] usernameAndPassword = BasicAuth.decode(token);
+
+            if (usernameAndPassword != null && usernameAndPassword.length == 2)
             {
-                return PushInterceptor.tokens.remove(token);    // claim token
 
-            } else {
-                String[] usernameAndPassword = BasicAuth.decode(token);
-
-                if (usernameAndPassword != null && usernameAndPassword.length == 2)
-                {
-                    return usernameAndPassword[0];
-                }
+                return usernameAndPassword[0];
             }
         }
 

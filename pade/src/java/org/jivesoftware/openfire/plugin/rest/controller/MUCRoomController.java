@@ -667,7 +667,7 @@ public class MUCRoomController {
               // Send a presence to other room members
               List<Presence> addNonePresence = room.addNone(userJid, room.getRole());
               for (Presence presence : addNonePresence) {
-                room.send(presence, room.getRole());
+                room.send(presence);
               }
         } catch (ForbiddenException e) {
             throw new ServiceException("Could not delete affiliation", jid, ExceptionType.NOT_ALLOWED, Response.Status.FORBIDDEN, e);

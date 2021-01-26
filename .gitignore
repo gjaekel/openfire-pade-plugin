@@ -1,11 +1,6 @@
 target/
 work/
 *.class
-*.cmd
-
-# ignore copied jitsi meet
-pade/classes/jitsi-meet
-pade/classes/docs
 
 # Ignore Intellij Idea project files
 *.iml
