@@ -137,7 +137,8 @@ public class InProgressListServlet extends HttpServlet
                 meeting.put( "url", new URL(requestUrl, "./" + roomName).toString());
                 meeting.put( "date", chatRoom.getCreationDate().getTime());
                 meeting.put( "duration", (duration/60000)*60000); // round down to minutes
-                meeting.put( "title", title);
+                // meeting.put( "title", title);  // TODO: refactor  app.bundle.min.js  to use this
+                meeting.put( "name", title);
 
                 meeting.put( "size", size);
                 meeting.put( "members", members);
